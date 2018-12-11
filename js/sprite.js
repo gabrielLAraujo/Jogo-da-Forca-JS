@@ -1,4 +1,5 @@
 let createSprite = (selector) => {
+    
     let moveFrame = (from, to) => {
         $el.removeClass(from)
             .addClass(to);

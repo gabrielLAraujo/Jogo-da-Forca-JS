@@ -3,8 +3,22 @@ let criaJogo = (sprite) => {
     lacunas = [];
     etapa = 1;
 
-    let preencheLacunas = () => {
+    let ganhou = () => {
 
+        return lacunas.length ?
+            !lacunas.some((lacuna) => {
+                return lacuna == '';
+            }) :
+            false
+    }
+    let reinicia = () => {
+        sprite.reset();
+    }
+    let perdeu = () => {
+        return sprite.isFinished();
+    }
+    let ganhouOuPerdeu = () => {
+        return ganhou() || perdeu();
     }
     let processaChute = (chute) => {
         let exp = new RegExp(chute, 'gi');
@@ -15,9 +29,9 @@ let criaJogo = (sprite) => {
             acertou = lacunas[resultado.index] = chute;
 
         }
-        if (!acertou) {
-            sprite.nextFrame();
-        }
+        if (!acertou) sprite.nextFrame();
+
+
     };
     let setPalavraSecreta = (palavraRecebida) => {
         palavraSecreta = palavraRecebida;
@@ -34,7 +48,7 @@ let criaJogo = (sprite) => {
             lacunas.push("");
         }
     };
-    let getlacunas = () => {
+    let getLacunas = () => {
         return lacunas;
     };
     let getEtapa = () => {
@@ -45,10 +59,13 @@ let criaJogo = (sprite) => {
 
     return {
         setPalavraSecreta: setPalavraSecreta,
-        getlacunas: getlacunas,
+        getLacunas: getLacunas,
         getEtapa: getEtapa,
-        processaChute: processaChute
-
+        processaChute: processaChute,
+        ganhou: ganhou,
+        perdeu: perdeu,
+        ganhouOuPerdeu: ganhouOuPerdeu,
+        reinicia: reinicia
     };
 
 };
